@@ -24,6 +24,8 @@ const AllCampusesView = (props) => {
             <h2>{campus.name}</h2>
           </Link>
           <h4>campus id: {campus.id}</h4>
+          {/* image may have to be coded in css file to be a certain percentage of the screen so that it isnt massive */}
+          <img src={campus.imageUrl}/>
           <p>{campus.address}</p>
           <p>{campus.description}</p>
           <hr/>
