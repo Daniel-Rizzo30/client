@@ -27,11 +27,16 @@ const AllStudentsView = (props) => {
 
       {students.map((student) => {
           let name = student.firstname + " " + student.lastname;
+          let url = student.imageUrl;
           return (
             <div key={student.id}>
               <Link to={`/student/${student.id}`}>
                 <h2>{name}</h2>
               </Link>
+              <h3>{student.email}</h3>
+              {/* image may have to be coded in css file to be a certain percentage of the screen so that it isnt massive */}
+              <img src={url}/>
+              <br/>
               <button onClick={() => deleteStudent(student.id)}>Delete</button>
               <hr/>
             </div>
