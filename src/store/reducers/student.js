@@ -17,16 +17,6 @@ const student = (state=initialState, action) => {  // Use "initialState" as defa
   switch (action.type) {
     case FETCH_STUDENT:
       return action.payload;
-    case at.ADD_STUDENT: // Added the rest of the cases
-      return [...state, action.payload]
-    case at.DELETE_STUDENT:
-      return state.filter(student => student.id!==action.payload);
-    case at.EDIT_STUDENT:
-      return state.map(student => { 
-        return (
-          student.id===action.payload.id ? action.payload : student
-        );
-      });
     default:
       // If the Reducer doesn't recognize the Action Type, returns the previous (current) State unchanged.
       return state;
