@@ -16,16 +16,22 @@ const CampusView = (props) => {
       <h1>{campus.name}</h1>
       <p>{campus.address}</p>
       <p>{campus.description}</p>
-      {campus.students.map( student => {
-        let name = student.firstname + " " + student.lastname;
-        return (
-          <div key={student.id}>
-            <Link to={`/student/${student.id}`}>
-              <h2>{name}</h2>
-            </Link>             
-          </div>
-        );
-      })}
+      <img src={campus.imageUrl} alt="Campus Profile"/>
+      {campus.students.length === 0 ? (
+        <h2>No students enrolled at {campus.name}.</h2>
+      ) : (
+        campus.students.map( student => {
+          let name = student.firstname + " " + student.lastname;
+          return (
+            <div key={student.id}>
+              <Link to={`/student/${student.id}`}>
+                <h2>{name}</h2>
+              </Link>             
+            </div>
+          );
+        })
+      )}
+      
     </div>
   );
 };

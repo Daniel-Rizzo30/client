@@ -35,7 +35,7 @@ const AllStudentsView = (props) => {
               </Link>
               <h3>{student.email}</h3>
               {/* image may have to be coded in css file to be a certain percentage of the screen so that it isnt massive */}
-              <img src={url}/>
+              <img src={url} alt="Student Profile"/>
               <br/>
               <button onClick={() => deleteStudent(student.id)}>Delete</button>
               <hr/>
