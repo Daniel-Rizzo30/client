@@ -6,7 +6,7 @@ It contains all Thunk Creators and Thunks.
 import * as ac from './actions/actionCreators';  // Import Action Creators ("ac" keyword Action Creator)
 const axios = require('axios');
 
-//All Campuses
+// All Campuses
 // THUNK CREATOR:
 export const fetchAllCampusesThunk = () => async (dispatch) => {  // The THUNK
   try {
