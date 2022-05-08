@@ -5,7 +5,6 @@ The Container component is responsible for stateful logic and data fetching, and
 passes data (if any) as props to the corresponding View component.
 If needed, it also defines the component's "connect" function. 
 ================================================== */
-import Header from './Header';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -55,10 +54,9 @@ class EditCampusContainer extends Component {
       id: this.state.id
     };
 
-    
     // Somehow send this data to the backend and close up this EditCampus component
     // Add new student in back-end database
-    //let editedCampus = await this.props.editCampus(new_info);
+    let editedCampus = this.props.editCampus(new_info); // await            ?????????
 
     // Update state, and trigger redirect to show the updated info
     this.setState({
@@ -68,7 +66,7 @@ class EditCampusContainer extends Component {
         imageUrl: "",
         id: -1,
         redirect: true, 
-        //redirectId: editedCampus.id
+        redirectId: editedCampus.id
     });
 
   }
@@ -82,13 +80,13 @@ class EditCampusContainer extends Component {
   render() {
     // Redirect to campus' page after submit
     if(this.state.redirect) {
-      return (<Redirect to={`/campus/${this.state.redirectId}`}/>)
+      // return (<Redirect to={`/campus/${this.state.redirectId}`}/>)
+      window.location.reload(); // Is this okay?         ????????????????????
     }
 
     // Display the input form via the corresponding View component
     return (
       <div>
-        <Header />
         <EditCampusView
           handleChange = {this.handleChange} 
           handleSubmit={this.handleSubmit}

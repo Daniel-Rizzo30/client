@@ -9,22 +9,45 @@ import Header from './Header';
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchCampusThunk } from "../../store/thunks";
-
+import { EditCampusContainer } from "./index"
 import { CampusView } from "../views";
 
 class CampusContainer extends Component {
+  constructor(props) { // Create and initialize state
+    super(props); // Always do super()
+    this.state = {
+        editor: false,
+    }
+  }
   // Get the specific campus data from back-end database
   componentDidMount() {
     // Get campus ID from URL (API link)
     this.props.fetchCampus(this.props.match.params.id);
   }
 
+  // Function to switch editing on and off
+  toggleEdit = () => {
+    let new_editor = !this.state.editor;
+    this.setState({
+      editor: new_editor // Toggle it
+    });
+  }
+
   // Render a Campus view by passing campus data as props to the corresponding View component
   render() {
-    return (
+    return ( // Add function as props to CampusView to toggle editor on/off
       <div>
         <Header />
-        <CampusView campus={this.props.campus} />
+        <CampusView 
+        campus={this.props.campus}
+        toggleEdit={this.toggleEdit}
+        editing={this.state.editor} 
+        /> 
+        {this.state.editor ? (
+          <EditCampusContainer campus={this.props.campus}/>
+        ) : (
+          null // don't do anything
+        )}
       </div>
     );
   }
