@@ -37,7 +37,6 @@ const CampusView = (props) => {
       ) : (
         <button onClick={toggleEdit}>Edit Campus</button>
       )}
-      
     </div>
   );
 };

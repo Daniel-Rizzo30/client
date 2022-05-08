@@ -1,8 +1,8 @@
 /*==================================================
-EditCampusView.js
+EditStudentView.js
 
 The Views component is responsible for rendering a portion of the webpage for editing 
-a campus when it is desired. 
+a Student when it is desired. 
 ================================================== */
 //import Button from '@material-ui/core/Button';
 //import Typography from '@material-ui/core/Typography';
@@ -35,38 +35,46 @@ const useStyles = makeStyles( () => ({
 }));
 
 // Take in props data to construct the component
-const EditCampusView = (props) => {
+const EditStudentView = (props) => {
   const classes = useStyles(); // Should I use this?
-  const {handleChange, handleSubmit, campus} = props;
+  const {handleChange, handleSubmit, student} = props;
   
-  // Render a form for editing the campus
+  // Render a form for editing the student
 
     return (
       <div>
-        <h1>Edit {campus.name}</h1>
+        <h1>Edit {student.firstname} {student.lastname}</h1>
         {/* Make a form, which uses handleSubmit to access the props functions from App.js */}  
         <form onSubmit={(e) => handleSubmit(e)}>
           <input 
           type="text" 
-          name="name"
-          placeholder='School Name' // Add a placeholder that tells the user what to input
-          defaultValue={campus.name} // Keep the value in state
+          name="firstname"
+          placeholder='Student First Name' // Add a placeholder that tells the user what to input
+          defaultValue={student.firstname} // Keep the value in state
           onChange={(e) => handleChange(e)} // Change state when the value changes
           />
           <br/>
           <input 
           type="text" 
-          name="address"
-          placeholder='School Address'
-          defaultValue={campus.address}
+          name="lastname"
+          placeholder="Student's Last Name"
+          defaultValue={student.lastname}
           onChange={(e) => handleChange(e)}  
           />
           <br/>
           <input 
           type="text" 
-          name="description"
-          placeholder="Description"
-          defaultValue={campus.description}
+          name="email"
+          placeholder="Email"
+          defaultValue={student.email}
+          onChange={(e) => handleChange(e)}  
+          />
+          <br/>
+          <input 
+          type="text" 
+          name="gpa"
+          placeholder="GPA"
+          defaultValue={student.gpa}
           onChange={(e) => handleChange(e)}  
           />
           <br/>
@@ -74,14 +82,14 @@ const EditCampusView = (props) => {
           type="text" 
           name="imageUrl"
           placeholder='Profile Picture'
-          defaultValue={campus.imageUrl}
+          defaultValue={student.imageUrl}
           onChange={(e) => handleChange(e)}  
           />
           <br/>
-          <button type="submit">Save Campus Edit</button>
+          <button type="submit">Save Student Edit</button>
         </form>
     </div>
   )
 }
 
-export default EditCampusView;
+export default EditStudentView;
