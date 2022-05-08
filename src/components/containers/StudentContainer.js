@@ -9,13 +9,29 @@ import Header from './Header';
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchStudentThunk } from "../../store/thunks";
+import { EditStudentContainer } from "./index"
 import { StudentView } from "../views";
 
 class StudentContainer extends Component {
+  constructor(props) { // Create and initialize state
+    super(props); // Always do super()
+    this.state = {
+        editor: false,
+    }
+  }
+
   // Get student data from back-end database
   componentDidMount() {
     //getting student ID from url
     this.props.fetchStudent(this.props.match.params.id);
+  }
+
+  // Function to switch editing on and off
+  toggleEdit = () => {
+    let new_editor = !this.state.editor;
+    this.setState({
+      editor: new_editor // Toggle it
+    });
   }
 
   // Render Student view by passing student data as props to the corresponding View component
@@ -23,7 +39,16 @@ class StudentContainer extends Component {
     return (
       <div>
         <Header />
-        <StudentView student={this.props.student} />
+        <StudentView 
+        student={this.props.student}
+        toggleEdit={this.toggleEdit}
+        editing={this.state.editor} 
+        /> 
+        {this.state.editor ? (
+          <EditStudentContainer student={this.props.student}/>
+        ) : (
+          null // don't do anything
+        )}
       </div>
     );
   }

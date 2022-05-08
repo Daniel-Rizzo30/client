@@ -19,6 +19,7 @@ class CampusContainer extends Component {
         editor: false,
     }
   }
+  
   // Get the specific campus data from back-end database
   componentDidMount() {
     // Get campus ID from URL (API link)
