@@ -50,30 +50,34 @@ const EditCampusView = (props) => {
           type="text" 
           name="name"
           placeholder='School Name' // Add a placeholder that tells the user what to input
-          value={campus.name} // Keep the value in state
+          defaultValue={campus.name} // Keep the value in state
           onChange={(e) => handleChange(e)} // Change state when the value changes
           />
+          <br/>
           <input 
           type="text" 
           name="address"
           placeholder='School Address'
-          value={campus.address}
+          defalutValue={campus.address}
           onChange={(e) => handleChange(e)}  
           />
+          <br/>
           <input 
           type="text" 
           name="description"
           placeholder="Description"
-          value={campus.description}
+          defaultValue={campus.description}
           onChange={(e) => handleChange(e)}  
           />
+          <br/>
           <input 
           type="text" 
           name="imageUrl"
           placeholder='Profile Picture'
-          value={campus.imageUrl}
+          defaultValue={campus.imageUrl}
           onChange={(e) => handleChange(e)}  
           />
+          <br/>
           <button type="submit">Save Campus Edit</button>
         </form>
     </div>
