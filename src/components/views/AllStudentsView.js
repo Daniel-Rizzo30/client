@@ -26,6 +26,11 @@ const AllStudentsView = (props) => {
     <div>
       <h1>All Students</h1>
 
+      <Link to={`/newstudent`}>
+        <button>Add New Student</button>
+      </Link>
+      <br/><br/>
+
       {students.map((student) => {
           let name = student.firstname + " " + student.lastname;
           let url = student.imageUrl;
@@ -46,10 +51,6 @@ const AllStudentsView = (props) => {
         }
       )}
       <br/>
-      <Link to={`/newstudent`}>
-        <button>Add New Student</button>
-      </Link>
-      <br/><br/>
     </div>
   );
 };

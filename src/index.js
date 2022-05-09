@@ -15,7 +15,8 @@ import { BrowserRouter } from "react-router-dom";
 // The BrowserRouter component sets a common basename for the nested Routes.
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
+    {/* Provider store={store} is showing the App where to get props from basically */}
+    <Provider store={store}> 
       <BrowserRouter>
         <App />
       </BrowserRouter>
