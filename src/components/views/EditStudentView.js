@@ -86,6 +86,14 @@ const EditStudentView = (props) => {
           onChange={(e) => handleChange(e)}  
           />
           <br/>
+          <input 
+          type="text" 
+          name="campusId"
+          placeholder="ID of Student's School"
+          defaultValue={student.campusId}
+          onChange={(e) => handleChange(e)}  
+          />
+          <br/>
           <button type="submit">Save Student Edit</button>
         </form>
     </div>
