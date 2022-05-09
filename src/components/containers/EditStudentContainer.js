@@ -23,6 +23,7 @@ class EditStudentContainer extends Component {
         email: "",
         imageUrl: "",
         id: -1,
+        campusId: -1, // The school's id that this student belongs to
         redirect: false, 
         redirectId: null,
     }
@@ -34,6 +35,7 @@ class EditStudentContainer extends Component {
         gpa: this.props.student.gpa,
         email: this.props.student.email,
         imageUrl: this.props.student.imageUrl,
+        campusId: this.props.student.campusId,
         id: this.props.student.id});  // Store received data in state's object
   }
 
@@ -54,6 +56,7 @@ class EditStudentContainer extends Component {
       gpa: this.state.gpa,
       email: this.state.email,
       imageUrl: this.state.imageUrl,
+      campusId: this.state.campusId,
       id: this.state.id
     };
 
@@ -69,8 +72,9 @@ class EditStudentContainer extends Component {
         email: "",
         imageUrl: "",
         id: -1,
+        campusId: -1,
         redirect: true, 
-        redirectId: editedStudent.id
+        //redirectId: editedStudent.id
     });
 
   }
