@@ -57,6 +57,7 @@ class EditCampusContainer extends Component {
     // Somehow send this data to the backend and close up this EditCampus component
     // Edit campus in back-end database
     let editedCampus = await this.props.editCampus(new_info); 
+    console.log(editedCampus)
 
     // Update state, and trigger redirect to show the updated info
     this.setState({
