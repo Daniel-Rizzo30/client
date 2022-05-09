@@ -45,7 +45,7 @@ class EditStudentContainer extends Component {
     type === "checkbox" ? this.setState({ [name]: checked }) : this.setState({ [name]: value })
   } 
   
-  handleSubmit = (event) =>  {
+  handleSubmit = async event =>  {
     event.preventDefault(); // Stop page refresh
 
     let new_info = { // Grab info from state
@@ -59,7 +59,7 @@ class EditStudentContainer extends Component {
 
     // Somehow send this data to the backend and close up this EditStudent component
     // Edit student in back-end database
-    let editedStudent = this.props.editStudent(new_info); // await            ?????????
+    let editedStudent = await this.props.editStudent(new_info); // await            ?????????
 
     // Update state, and trigger redirect to show the updated info
     this.setState({
