@@ -9,7 +9,8 @@ import { Link } from "react-router-dom";
 import { EditCampusContainer } from "../containers/index"
 
 const AllCampusesView = (props) => {
-  const {allCampuses, editors, toggleEdit} = props;
+  // const {allCampuses, editors, toggleEdit, deleteCampus} = props;
+  const {allCampuses, deleteCampus} = props;
   // If there is no campus, display a message.
   if (!allCampuses.length) {
     return <div>There are no campuses.</div>;
@@ -36,6 +37,8 @@ const AllCampusesView = (props) => {
           <p>{campus.address}</p>
           <p>{campus.description}</p>
           <EditCampusContainer campus={campus}/>
+          <br/>
+          <button onClick={() => deleteCampus(campus.id)}>Delete</button>
           <hr/>
         </div>
       ))}
