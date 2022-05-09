@@ -8,6 +8,10 @@ import { Link } from "react-router-dom";
 
 const StudentView = (props) => {
   const { student, editing, toggleEdit} = props;
+  let gpa = student.gpa // Grab gpa
+  if (gpa % 1 === 0) { // If whole number
+    gpa = gpa.toFixed(1); // Display with extra decimal place
+  }
 
   // Render a single Student view 
   return (
@@ -25,7 +29,7 @@ const StudentView = (props) => {
           <Link to={`/campus/${student.campus.id}`}>
             <h3>{student.campus.name}</h3>
           </Link>
-          <h4>GPA: {student.gpa}</h4>
+          <h4>GPA: {gpa}</h4>
         </div>
       )}
       <br/>

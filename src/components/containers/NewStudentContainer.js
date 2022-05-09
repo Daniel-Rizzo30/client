@@ -51,6 +51,7 @@ class NewStudentContainer extends Component {
     
     // Add new student in back-end database
     let newStudent = await this.props.addStudent(student);
+    console.log(newStudent);
 
     // Update state, and trigger redirect to show the new student
     this.setState({
