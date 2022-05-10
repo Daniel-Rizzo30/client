@@ -10,7 +10,7 @@ import { EditCampusContainer } from "../containers/index"
 
 const AllCampusesView = (props) => {
   // const {allCampuses, editors, toggleEdit, deleteCampus} = props;
-  const {allCampuses, deleteCampus} = props;
+  const {allCampuses, deleteCampus, toggleEdit, editing} = props;
   // If there is no campus, display a message.
   if (!allCampuses.length) {
     return <div>There are no campuses.</div>;
@@ -24,6 +24,12 @@ const AllCampusesView = (props) => {
       <Link to={`/newcampus`}>
         <button>Add New Campus</button>
       </Link>
+      <br />
+      {editing ? (
+        <button onClick={toggleEdit}>Quit Editing</button>
+      ) : (
+        <button onClick={toggleEdit}>Edit Campuses</button>
+      )}
       <br/><br/>
 
       {allCampuses.map((campus) => (
@@ -36,9 +42,14 @@ const AllCampusesView = (props) => {
           <img src={campus.imageUrl} alt="Campus Profile"/>
           <p>{campus.address}</p>
           <p>{campus.description}</p>
-          <EditCampusContainer campus={campus}/>
           <br/>
           <button onClick={() => deleteCampus(campus.id)}>Delete</button>
+          <br />
+          {editing ? (
+          <EditCampusContainer campus={campus}/>
+          ) : (
+            null // don't do anything
+          )}
           <hr/>
         </div>
       ))}

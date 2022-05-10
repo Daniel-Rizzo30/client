@@ -16,9 +16,23 @@ import {
 import AllStudentsView from '../views/AllStudentsView';
 
 class AllStudentsContainer extends Component {
+  constructor(props) { // Create and initialize state
+    super(props); // Always do super()
+    this.state = {
+        editor: false,
+    }
+  }
   // Get all students data from back-end database
   componentDidMount() {
     this.props.fetchAllStudents();
+  }
+
+  // Function to switch editing on and off
+  toggleEdit = () => {
+    let new_editor = !this.state.editor;
+    this.setState({
+      editor: new_editor // Toggle it
+    });
   }
 
   // Render All Students view by passing all students data as props to the corresponding View component
@@ -29,6 +43,8 @@ class AllStudentsContainer extends Component {
         <AllStudentsView 
           students={this.props.allStudents}
           deleteStudent={this.props.deleteStudent}   
+          toggleEdit={this.toggleEdit}
+          editing={this.state.editor}
         />
       </div>
     )
