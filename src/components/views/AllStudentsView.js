@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { EditStudentContainer } from "../containers/index"
 
 const AllStudentsView = (props) => {
-  const {students, deleteStudent} = props;
+  const {students, deleteStudent, toggleEdit, editing} = props;
   // If there is no student, display a message
   if (!students.length) {
     return (
@@ -29,6 +29,12 @@ const AllStudentsView = (props) => {
       <Link to={`/newstudent`}>
         <button>Add New Student</button>
       </Link>
+      <br />
+      {editing ? (
+        <button onClick={toggleEdit}>Quit Editing</button>
+      ) : (
+        <button onClick={toggleEdit}>Edit Students</button>
+      )}
       <br/><br/>
 
       {students.map((student) => {
@@ -42,9 +48,14 @@ const AllStudentsView = (props) => {
               <h3>{student.email}</h3>
               {/* image may have to be coded in css file to be a certain percentage of the screen so that it isnt massive */}
               <img src={url} alt="Student Profile"/>
-              <EditStudentContainer student={student}/>
               <br/>
               <button onClick={() => deleteStudent(student.id)}>Delete</button>
+              <br />
+              {editing ? (
+              <EditStudentContainer student={student}/>
+              ) : (
+              null // don't do anything
+              )}
               <hr/>
             </div>
           );
