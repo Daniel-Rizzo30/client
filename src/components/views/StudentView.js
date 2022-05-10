@@ -34,7 +34,7 @@ const StudentView = (props) => {
       )}
       <br />
       {/* Was completely breaking the page, as the student/campus gets instant deleted, changed how onClick written */}
-      <button onClick={() => {props.deleteStudent(student.id); alert("Student Deleted!")}}>Delete Student</button>
+      <button onClick={() => {deleteStudent(student.id); alert("Student Deleted!")}}>Delete Student</button>
       <br />
       {editing ? (
         <button onClick={toggleEdit}>Quit Edit</button>

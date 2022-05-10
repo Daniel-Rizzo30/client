@@ -9,7 +9,10 @@ import Header from './Header';
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchCampusThunk, 
-         deleteCampusThunk } from "../../store/thunks";
+         deleteCampusThunk,
+         editStudentThunk, // For editing a student when button is pressed
+         fetchAllStudentsThunk // For checking if student can be added/dropped from the campus
+       } from "../../store/thunks";
 import { EditCampusContainer } from "./index"
 import { CampusView } from "../views";
 
@@ -45,6 +48,8 @@ class CampusContainer extends Component {
         toggleEdit={this.toggleEdit}
         editing={this.state.editor} 
         deleteCampus={this.props.deleteCampus}
+        enrollStudent={this.enrollStudent}
+        dropStudent={this.dropStudent}
         /> 
         {this.state.editor ? (
           <EditCampusContainer campus={this.props.campus}/>
