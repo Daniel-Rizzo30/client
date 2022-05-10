@@ -28,6 +28,8 @@ class CampusContainer extends Component {
   componentDidMount() {
     // Get campus ID from URL (API link)
     this.props.fetchCampus(this.props.match.params.id);
+    this.props.fetchAllStudents(); // Will automatically save allStudents into props ?
+
   }
 
   // Function to switch editing on and off
@@ -36,6 +38,44 @@ class CampusContainer extends Component {
     this.setState({
       editor: new_editor // Toggle it
     });
+  }
+
+  dropStudent = async (campusId, studentId) => {
+    let droppable = false; // Set flag
+    for(let i = 0; i < this.props.allStudents.length; i++) {
+      if(this.props.allStudents[i].id === studentId) { // If this is the student
+        if(this.props.allStudents[i].campusId === campusId) { // and they're enrolled
+          droppable = true; // They can be dropped
+        }
+        break; // Break for loop either way
+      }
+    }
+    if(droppable) { // If they can be dropped
+      let new_info = this.props.allStudents[studentId]; // Copy their info
+      new_info.campusId = null; // Clobber their campus id
+      // Somehow send this data to the backend and close up this EditStudent component
+      // Edit student in back-end database
+      let editedStudent = await this.props.editStudent(new_info);
+    }
+  }
+
+  enrollStudent = async (campusId, studentId) => {
+    // let addable = false; // Set flag
+    // for(let i = 0; i < this.props.allStudents.length; i++) {
+    //   if(this.props.allStudents[i].id === studentId) { // If this is the student
+    //     if(this.props.allStudents[i].campusId !== campusId) { // and they're not already enrolled
+    //       addable = true; // They can be added
+    //     }
+    //     break; // Break for loop either way
+    //   }
+    // }
+    // if(addable) { // If they can be dropped
+      let new_info = this.props.allStudents[studentId]; // Copy their info
+      new_info.campusId = campusId; // Change their campusId
+      // Somehow send this data to the backend and close up this EditStudent component
+      // Edit student in back-end database
+      let editedStudent = await this.props.editStudent(new_info);
+    //}
   }
 
   // Render a Campus view by passing campus data as props to the corresponding View component
@@ -67,6 +107,7 @@ class CampusContainer extends Component {
 const mapState = (state) => {
   return {
     campus: state.campus,  // Get the State object from Reducer "campus"
+    allStudents: state.allStudents,  // Get the State object from Reducer "allStudents"
   };
 };
 // 2. The "mapDispatch" argument is used to dispatch Action (Redux Thunk) to Redux Store.
@@ -74,7 +115,9 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchCampus: (id) => dispatch(fetchCampusThunk(id)),
-    deleteCampus: (id) => dispatch(deleteCampusThunk(id))
+    deleteCampus: (id) => dispatch(deleteCampusThunk(id)),
+    editStudent: (id) => dispatch(editStudentThunk(id)),
+    fetchAllStudents: (id) => dispatch(fetchAllStudentsThunk())
   };
 };
 

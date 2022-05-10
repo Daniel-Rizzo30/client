@@ -18,6 +18,7 @@ const StudentView = (props) => {
     <div>
       <h1>{student.firstname + " " + student.lastname}</h1>
       <h2>{student.email}</h2>
+      <h6>ID: {student.id}</h6>
       <img src={student.imageUrl} alt="Student Profile"/>
       {student.campus === null ? (
         <div>
