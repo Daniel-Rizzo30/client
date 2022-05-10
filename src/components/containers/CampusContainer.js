@@ -42,40 +42,55 @@ class CampusContainer extends Component {
 
   dropStudent = async (campusId, studentId) => {
     let droppable = false; // Set flag
+    let studentPlace = -1;
     for(let i = 0; i < this.props.allStudents.length; i++) {
-      if(this.props.allStudents[i].id === studentId) { // If this is the student
-        if(this.props.allStudents[i].campusId === campusId) { // and they're enrolled
+      if(this.props.allStudents[i].id.toString() === studentId) { // If this is the student, change id to string for comparison
+        console.log("Found studentId");
+        studentPlace = i; // Save their spot in the array
+        // and they're already enrolled, they're droppable
+        if(this.props.allStudents[i].campusId !== null && this.props.allStudents[i].campusId.toString() !== campusId) { 
+          console.log("Droppable!")
           droppable = true; // They can be dropped
         }
         break; // Break for loop either way
       }
     }
     if(droppable) { // If they can be dropped
-      let new_info = this.props.allStudents[studentId]; // Copy their info
-      new_info.campusId = null; // Clobber their campus id
+      let new_info = this.props.allStudents[studentPlace]; // Copy their info
+      console.log(new_info); // Output to console to check
+      new_info.campusId = null; // Clobber their campus id, will also update their .campus information
       // Somehow send this data to the backend and close up this EditStudent component
       // Edit student in back-end database
       let editedStudent = await this.props.editStudent(new_info);
+      window.location.reload(); // Reload for changes
     }
   }
 
   enrollStudent = async (campusId, studentId) => {
-    // let addable = false; // Set flag
-    // for(let i = 0; i < this.props.allStudents.length; i++) {
-    //   if(this.props.allStudents[i].id === studentId) { // If this is the student
-    //     if(this.props.allStudents[i].campusId !== campusId) { // and they're not already enrolled
-    //       addable = true; // They can be added
-    //     }
-    //     break; // Break for loop either way
-    //   }
-    // }
-    // if(addable) { // If they can be dropped
-      let new_info = this.props.allStudents[studentId]; // Copy their info
-      new_info.campusId = campusId; // Change their campusId
+    let addable = false; // Set flag
+    let studentPlace = -1;
+    console.log(studentId, " is student ID")
+    for(let i = 0; i < this.props.allStudents.length; i++) {
+      if(this.props.allStudents[i].id.toString() === studentId) { // If this is the student, change id to string for comparison
+        console.log("Found studentId");
+        studentPlace = i; // Save their spot in the array
+        // and they're not already enrolled, they're addable
+        if(this.props.allStudents[i].campusId === null || this.props.allStudents[i].campusId.toString() !== campusId) {
+          console.log("Addable!")
+          addable = true; // They can be added
+        }
+        break; // Break for loop either way
+      }
+    }
+    if(addable) { // If they can be dropped
+      let new_info = this.props.allStudents[studentPlace]; // Copy their info
+      console.log(new_info); // Output to console to check
+      new_info.campusId = parseInt(campusId); // Change their campusId, save as an int, will also update their .campus information
       // Somehow send this data to the backend and close up this EditStudent component
       // Edit student in back-end database
       let editedStudent = await this.props.editStudent(new_info);
-    //}
+      window.location.reload(); // Reload for changes
+    }
   }
 
   // Render a Campus view by passing campus data as props to the corresponding View component
