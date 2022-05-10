@@ -7,7 +7,7 @@ It constructs a React component to display the single student view page.
 import { Link } from "react-router-dom";
 
 const StudentView = (props) => {
-  const { student, editing, toggleEdit} = props;
+  const { student, editing, toggleEdit, deleteStudent} = props;
   let gpa = student.gpa // Grab gpa
   if (gpa % 1 === 0) { // If whole number
     gpa = gpa.toFixed(1); // Display with extra decimal place
@@ -32,12 +32,16 @@ const StudentView = (props) => {
           <h4>GPA: {gpa}</h4>
         </div>
       )}
-      <br/>
+      <br />
+      {/* Was completely breaking the page, as the student/campus gets instant deleted, changed how onClick written */}
+      <button onClick={() => {props.deleteStudent(student.id); alert("Student Deleted!")}}>Delete Student</button>
+      <br />
       {editing ? (
         <button onClick={toggleEdit}>Quit Edit</button>
       ) : (
         <button onClick={toggleEdit}>Edit Student</button>
       )}
+      <br />
     </div>
   );
 

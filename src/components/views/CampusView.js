@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 // Take in props data to construct the component
 const CampusView = (props) => {
-  const {campus, editing, toggleEdit} = props;
+  const {campus, editing, toggleEdit, deleteCampus} = props;
   
   // Render a single Campus view with list of its students
   return (
@@ -31,12 +31,16 @@ const CampusView = (props) => {
           );
         })
       )}
+      <br /> 
+      {/* Was completely breaking the page, as the student/campus gets instant deleted, changed how onClick written */}
+      <button onClick={() => {props.deleteCampus(campus.id); alert("Campus Deleted!")}}>Delete Campus</button>
       <br/>
       {editing ? (
         <button onClick={toggleEdit}>Quit Edit</button>
       ) : (
         <button onClick={toggleEdit}>Edit Campus</button>
       )}
+      <br />
     </div>
   );
 };
