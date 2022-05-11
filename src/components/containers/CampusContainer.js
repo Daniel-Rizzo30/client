@@ -61,7 +61,7 @@ class CampusContainer extends Component {
       new_info.campusId = null; // Clobber their campus id, will also update their .campus information
       // Somehow send this data to the backend and close up this EditStudent component
       // Edit student in back-end database
-      let editedStudent = await this.props.editStudent(new_info);
+      await this.props.editStudent(new_info);
       window.location.reload(); // Reload for changes
     }
   }
@@ -88,7 +88,7 @@ class CampusContainer extends Component {
       new_info.campusId = parseInt(campusId); // Change their campusId, save as an int, will also update their .campus information
       // Somehow send this data to the backend and close up this EditStudent component
       // Edit student in back-end database
-      let editedStudent = await this.props.editStudent(new_info);
+      await this.props.editStudent(new_info);
       window.location.reload(); // Reload for changes
     }
   }
