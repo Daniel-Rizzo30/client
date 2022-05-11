@@ -7,8 +7,6 @@ If needed, it also defines the component's "connect" function.
 ================================================== */
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-
 import EditStudentView from '../views/EditStudentView';
 import { editStudentThunk } from '../../store/thunks'; // Does not exist yet ... 
 
@@ -25,7 +23,6 @@ class EditStudentContainer extends Component {
         id: -1,
         campusId: -1, // The school's id that this student belongs to
         redirect: false, 
-        redirectId: null,
     }
   }
 
@@ -62,7 +59,8 @@ class EditStudentContainer extends Component {
 
     // Somehow send this data to the backend and close up this EditStudent component
     // Edit student in back-end database
-    let editedStudent = await this.props.editStudent(new_info); // await            ?????????
+    await this.props.editStudent(new_info); // await
+    alert(`${new_info.firstname} ${new_info.lastname}'s edit was saved.`); // Tell user
 
     // Update state, and trigger redirect to show the updated info
     this.setState({
@@ -74,7 +72,6 @@ class EditStudentContainer extends Component {
         id: -1,
         campusId: -1,
         redirect: true, 
-        //redirectId: editedStudent.id
     });
 
   }
@@ -88,8 +85,7 @@ class EditStudentContainer extends Component {
   render() {
     // Redirect to student's page after submit
     if(this.state.redirect) {
-      // return (<Redirect to={`/student/${this.state.redirectId}`}/>)
-      window.location.reload(); // Is this okay?         ????????????????????
+      window.location.reload(); // Reload for updated state....
     }
 
     // Display the input form via the corresponding View component
