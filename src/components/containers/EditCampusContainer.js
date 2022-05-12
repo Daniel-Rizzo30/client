@@ -22,6 +22,7 @@ class EditCampusContainer extends Component {
         imageUrl: "",
         id: -1,
         redirect: false, 
+        errorCaught: false,
     }
   }
 
@@ -51,21 +52,34 @@ class EditCampusContainer extends Component {
       imageUrl: this.state.imageUrl,
       id: this.state.id
     };
+    if (new_info.imageUrl === "") { // If imageUrl given was empty
+      delete new_info.imageUrl; // Don't pass that to Sequelize
+      // Give sequelize null instead so it will give the defaultValue.
+    } // And so that allowNull will work
 
     // Somehow send this data to the backend and close up this EditCampus component
     // Edit campus in back-end database
-    await this.props.editCampus(new_info);
-    alert(`${new_info.name}'s edit was saved.`); // Tell user
-
-    // Update state, and trigger redirect to show the updated info
-    this.setState({
-        name: "", 
-        address: "",
-        description: "",
-        imageUrl: "",
-        id: -1,
-        redirect: true, 
-    });
+      try {
+        let campus = await this.props.editCampus(new_info)
+        console.log(campus.id); // Will catch this error if editCampus failed. 
+        alert(`${new_info.name}'s edit was saved.`); // Tell user
+        // Update state, and trigger redirect to show the new campus
+        this.setState({
+          name: "", 
+          address: "", 
+          description: "",
+          imageUrl: "",
+          redirect: true, 
+          id: -1
+        });
+      }
+      catch(err) { // If errors doing the above, then: 
+        console.error(err); // Output error and give alert to new information at bottom of page
+        alert("Error with edit! Please follow the Campus Information guidelines found below");
+        this.setState({
+          errorCaught: true // Tell react to render new thing
+        });
+      }
 
   }
   
@@ -89,6 +103,17 @@ class EditCampusContainer extends Component {
           handleSubmit={this.handleSubmit}
           campus={this.props.campus} // Pass down the campus that it is editing     
         />
+        {this.state.errorCaught ? (
+          <div>
+            <br />
+            <p>Campus name: No restraints, but cannot be null.</p>
+            <p>Campus address: No restraints, but cannot be null.</p>
+            <p>Campus Image: Should be a valid image link, or can be left blank.</p>
+            <p>Campus Description: No restraints, and can be null.</p>
+          </div>
+        ) : (
+          null
+        )}
       </div>          
     );
   }

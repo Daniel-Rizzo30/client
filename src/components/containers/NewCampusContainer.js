@@ -61,7 +61,7 @@ class NewCampusContainer extends Component {
           description: "",
           imageUrl: "",
           redirect: true, 
-          redirectId: newCampus.id
+          redirectId: newCampus.id // Will catch this error if the add failed
         });
       })
       .catch(err => { // If errors doing the above, then: 

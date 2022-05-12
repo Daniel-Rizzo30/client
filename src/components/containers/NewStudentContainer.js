@@ -65,9 +65,9 @@ class NewStudentContainer extends Component {
           campusId: null, 
           redirect: true, 
           gpa: this.state.gpa,
-          imageUrl: this.state.imageUrl,
-          email: this.state.email,
-          redirectId: newStudent.id
+          imageUrl: "",
+          email: "",
+          redirectId: newStudent.id // Will catch this error if the add failed
         });
       })
       .catch(err => { // If errors doing the above, then: 
