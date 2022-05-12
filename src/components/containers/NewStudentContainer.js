@@ -25,7 +25,8 @@ class NewStudentContainer extends Component {
       gpa: null,
       campusId: null, 
       redirect: false, 
-      redirectId: null
+      redirectId: null,
+      errorCaught: false,
     };
   }
 
@@ -48,19 +49,34 @@ class NewStudentContainer extends Component {
         imageUrl: this.state.imageUrl,
         email: this.state.email,
     };
+    if (student.imageUrl === "") { // If imageUrl given was empty
+      delete student.imageUrl; // Don't pass that to Sequelize
+      // Give sequelize null instead so it will give the defaultValue.
+    }
     
     // Add new student in back-end database
-    let newStudent = await this.props.addStudent(student);
-    console.log(newStudent);
-
-    // Update state, and trigger redirect to show the new student
-    this.setState({
-      firstname: "", 
-      lastname: "", 
-      campusId: null, 
-      redirect: true, 
-      redirectId: newStudent.id
-    });
+    await this.props.addStudent(student)
+      .then(newStudent => {
+        console.log(newStudent);
+        // Update state, and trigger redirect to show the new student
+        this.setState({
+          firstname: "", 
+          lastname: "", 
+          campusId: null, 
+          redirect: true, 
+          gpa: this.state.gpa,
+          imageUrl: this.state.imageUrl,
+          email: this.state.email,
+          redirectId: newStudent.id
+        });
+      })
+      .catch(err => { // If errors doing the above, then: 
+        console.error(err); // Output error and give alert to new information at bottom of page
+        alert("Error with add! Please follow the Student Information guidelines found at the bottom of the page");
+        this.setState({
+          errorCaught: true // Tell react to render new thing
+        });
+      });
   }
 
   // Unmount when the component is being removed from the DOM:
@@ -83,6 +99,19 @@ class NewStudentContainer extends Component {
           handleChange = {this.handleChange} 
           handleSubmit={this.handleSubmit}      
         />
+        {this.state.errorCaught ? (
+          <div>
+            <br />
+            <p>Student First and Last names: Must be one capital letter followed by any amount of lowercase letters,
+               cannot be null.</p>
+            <p>Student's Campus ID: Must be a valid  and actual campus ID of a school within this database.</p>
+            <p>Student Email: Must contain @ symbol, and be in standard email format, cannot be null.</p>
+            <p>Student Image: Should be a valid image link, or can be left blank.</p>
+            <p>Student GPA: Must be between 0.0 and 4.0.</p>
+          </div>
+        ) : (
+          null
+        )}
       </div>          
     );
   }
