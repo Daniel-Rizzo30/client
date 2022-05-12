@@ -8,9 +8,11 @@ import { Link } from "react-router-dom";
 
 const StudentView = (props) => {
   const { student, editing, toggleEdit, deleteStudent} = props;
-  let gpa = student.gpa // Grab gpa
-  if (gpa % 1 === 0) { // If whole number
-    gpa = gpa.toFixed(1); // Display with extra decimal place
+  if (student.gpa !== null) { // If they have a gpa
+    let gpa = student.gpa // Grab gpa
+    if (gpa % 1 === 0) { // If whole number
+      gpa = gpa.toFixed(1); // Display with extra decimal place
+    }
   }
 
   // Render a single Student view 
@@ -23,14 +25,18 @@ const StudentView = (props) => {
       {student.campus === null ? (
         <div>
           <h3>{student.firstname + " " + student.lastname} is not enrolled at a school.</h3>
-          <h4>GPA: N/A</h4>
+          <h4>GPA: N/A (Not enrolled!)</h4>
         </div>
       ) : (
         <div>
           <Link to={`/campus/${student.campus.id}`}>
             <h3>{student.campus.name}</h3>
           </Link>
-          <h4>GPA: {gpa}</h4>
+          {student.gpa !== null ? (
+            <h4>GPA: {student.gpa}</h4>
+          ) : (
+            <h4>No GPA given.</h4>
+          )}
         </div>
       )}
       <br />

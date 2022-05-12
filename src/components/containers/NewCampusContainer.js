@@ -23,7 +23,8 @@ class NewCampusContainer extends Component {
       description: "",
       imageUrl: "",
       redirect: false, 
-      redirectId: null
+      redirectId: null,
+      errorCaught: false,
     };
   }
 
@@ -44,20 +45,32 @@ class NewCampusContainer extends Component {
         description: this.state.description,
         imageUrl: this.state.imageUrl,
     };
-    
-    // Add new campus in back-end database
-    let newCampus = await this.props.addCampus(campus);
-    console.log(newCampus);
+    if (campus.imageUrl === "") { // If imageUrl given was empty
+      delete campus.imageUrl; // Don't pass that to Sequelize
+      // Give sequelize null instead so it will give the defaultValue.
+    } // And so that allowNull will work
 
-    // Update state, and trigger redirect to show the new campus
-    this.setState({
-      name: "", 
-      address: "", 
-      description: "",
-      imageUrl: "",
-      redirect: true, 
-      redirectId: newCampus.id
-    });
+    // Add new campus in back-end database
+    await this.props.addCampus(campus)
+      .then(newCampus => {
+        console.log(newCampus);
+        // Update state, and trigger redirect to show the new campus
+        this.setState({
+          name: "", 
+          address: "", 
+          description: "",
+          imageUrl: "",
+          redirect: true, 
+          redirectId: newCampus.id
+        });
+      })
+      .catch(err => { // If errors doing the above, then: 
+        console.error(err); // Output error and give alert to new information at bottom of page
+        alert("Error with add! Please follow the Campus Information guidelines found at the bottom of the page");
+        this.setState({
+          errorCaught: true // Tell react to render new thing
+        });
+      });
   }
 
   // Unmount when the component is being removed from the DOM:
@@ -80,6 +93,17 @@ class NewCampusContainer extends Component {
           handleChange = {this.handleChange} 
           handleSubmit={this.handleSubmit}      
         />
+        {this.state.errorCaught ? (
+          <div>
+            <br />
+            <p>Campus name: No restraints, but cannot be null.</p>
+            <p>Campus address: No restraints, but cannot be null.</p>
+            <p>Campus Image: Should be a valid image link, or can be left blank.</p>
+            <p>Campus Description: No restraints, and can be null.</p>
+          </div>
+        ) : (
+          null
+        )}
       </div>          
     );
   }
