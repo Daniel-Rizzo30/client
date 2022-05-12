@@ -95,6 +95,11 @@ class CampusContainer extends Component {
 
   // Render a Campus view by passing campus data as props to the corresponding View component
   render() {
+    if (!this.props.campus) { // If campus doesn't exist
+      return (
+        <h1>Campus not found!</h1> // Return this so that /campuses/<random-id> doesn't crash
+      ); // Especially right after a campus is just deleted a page refresh/going back to the page is a bad look
+    }
     return ( // Add function as props to CampusView to toggle editor on/off
       <div>
         <Header />
