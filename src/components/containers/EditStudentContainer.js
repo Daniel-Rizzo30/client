@@ -23,6 +23,7 @@ class EditStudentContainer extends Component {
         id: -1,
         campusId: -1, // The school's id that this student belongs to
         redirect: false, 
+        errorCaught: false,
     }
   }
 
@@ -56,24 +57,36 @@ class EditStudentContainer extends Component {
       campusId: this.state.campusId,
       id: this.state.id
     };
+    if (new_info.imageUrl === "") { // If imageUrl given was empty
+      delete new_info.imageUrl; // Don't pass that to Sequelize
+      // Give sequelize null instead so it will give the defaultValue.
+    }
 
     // Somehow send this data to the backend and close up this EditStudent component
     // Edit student in back-end database
-    await this.props.editStudent(new_info); // await
-    alert(`${new_info.firstname} ${new_info.lastname}'s edit was saved.`); // Tell user
-
-    // Update state, and trigger redirect to show the updated info
-    this.setState({
-        firstname: "", 
-        lastname: "",
-        gpa: -1,
-        email: "",
-        imageUrl: "",
-        id: -1,
-        campusId: -1,
-        redirect: true, 
-    });
-
+      try {
+        let student = await this.props.editStudent(new_info) // await
+        console.log(student.id); // Will catch this error if editStudent failed. 
+        alert(`${new_info.firstname} ${new_info.lastname}'s edit was saved.`); // Tell user
+        // Update state, and trigger redirect to show the new student
+        this.setState({
+          firstname: "", 
+          lastname: "",
+          gpa: -1,
+          email: "",
+          imageUrl: "",
+          id: -1,
+          campusId: -1,
+          redirect: true, 
+        });
+      }
+      catch(err) { // If errors doing the above, then: 
+        console.error(err); // Output error and give alert to new information at bottom of page
+        alert("Error with edit! Please follow the Student Information guidelines found below");
+        this.setState({
+          errorCaught: true // Tell react to render new thing
+        });
+      };
   }
   
   // Unmount when the component is being removed from the DOM:
@@ -96,6 +109,19 @@ class EditStudentContainer extends Component {
           handleSubmit={this.handleSubmit}
           student={this.props.student} // Pass down the student that it is editing     
         />
+        {this.state.errorCaught ? (
+          <div>
+            <br />
+            <p>Student First and Last names: Must be one capital letter followed by any amount of lowercase letters,
+               cannot be null.</p>
+            <p>Student's Campus ID: Must be a valid  and actual campus ID of a school within this database.</p>
+            <p>Student Email: Must contain @ symbol, and be in standard email format, cannot be null.</p>
+            <p>Student Image: Should be a valid image link, or can be left blank.</p>
+            <p>Student GPA: Must be between 0.0 and 4.0.</p>
+          </div>
+        ) : (
+          null
+        )}
       </div>          
     );
   }
