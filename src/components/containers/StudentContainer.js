@@ -40,6 +40,7 @@ class StudentContainer extends Component {
     if (!this.props.student) { // If student doesn't exist
       return (
         <h1>Student not found!</h1> // Return this so that /students/<random-id> doesn't crash
+        
       ); // Especially right after a student is just deleted a page refresh/going back to the page is a bad look
     }
     return (

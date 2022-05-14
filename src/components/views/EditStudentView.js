@@ -4,33 +4,20 @@ EditStudentView.js
 The Views component is responsible for rendering a portion of the webpage for editing 
 a Student when it is desired. 
 ================================================== */
-//import Button from '@material-ui/core/Button';
-//import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 // Create styling for the input form
 const useStyles = makeStyles( () => ({
-  formContainer:{  
-    width: '500px',
-    backgroundColor: '#f0f0f5',
-    borderRadius: '5px',
-    margin: 'auto',
-  },
-  title: {
-    flexGrow: 1,
-    textAlign: 'left',
-    textDecoration: 'none'
-  }, 
-  customizeAppBar:{
-    backgroundColor: '#11153e',
-    shadows: ['none'],
-  },
   formTitle:{
     backgroundColor:'#c5c8d6',
     marginBottom: '15px',
+    marginLeft: '30%',
     textAlign: 'center',
     borderRadius: '5px 5px 0px 0px',
-    padding: '3px'
+    padding: '3px',
+    width: '40%', 
   },
 }));
 
@@ -43,9 +30,15 @@ const EditStudentView = (props) => {
 
     return (
       <div>
-        <h1>Edit {student.firstname} {student.lastname}</h1>
+        <br />
+        <div className={classes.formTitle}>
+            <Typography style={{fontWeight: 'bold', fontFamily: 'Courier, sans-serif', fontSize: '20px', color: '#11153e'}}>
+              Edit {student.firstname} {student.lastname}
+            </Typography>
+        </div>
         {/* Make a form, which uses handleSubmit to access the props functions from App.js */}  
         <form onSubmit={(e) => handleSubmit(e)}>
+          <label style= {{color:'#11153e', fontWeight: 'bold'}}>First Name: </label>
           <input 
           type="text" 
           name="firstname"
@@ -54,6 +47,7 @@ const EditStudentView = (props) => {
           onChange={(e) => handleChange(e)} // Change state when the value changes
           />
           <br/>
+          <label style= {{color:'#11153e', fontWeight: 'bold'}}>Last Name: </label>
           <input 
           type="text" 
           name="lastname"
@@ -62,6 +56,7 @@ const EditStudentView = (props) => {
           onChange={(e) => handleChange(e)}  
           />
           <br/>
+          <label style= {{color:'#11153e', fontWeight: 'bold'}}>Email: </label>
           <input 
           type="text" 
           name="email"
@@ -70,6 +65,7 @@ const EditStudentView = (props) => {
           onChange={(e) => handleChange(e)}  
           />
           <br/>
+          <label style= {{color:'#11153e', fontWeight: 'bold'}}>GPA: </label>
           <input 
           type="text" 
           name="gpa"
@@ -78,6 +74,7 @@ const EditStudentView = (props) => {
           onChange={(e) => handleChange(e)}  
           />
           <br/>
+          <label style= {{color:'#11153e', fontWeight: 'bold'}}>Image: </label>
           <input 
           type="text" 
           name="imageUrl"
@@ -86,6 +83,7 @@ const EditStudentView = (props) => {
           onChange={(e) => handleChange(e)}  
           />
           <br/>
+          <label style= {{color:'#11153e', fontWeight: 'bold'}}>Campus ID: </label>
           <input 
           type="text" 
           name="campusId"
@@ -94,7 +92,10 @@ const EditStudentView = (props) => {
           onChange={(e) => handleChange(e)}  
           />
           <br/>
-          <button type="submit">Save Student Edit</button>
+          <br />
+          <Button variant="contained" color="primary" type="submit">
+            Save Student Edit
+          </Button>
         </form>
     </div>
   )
