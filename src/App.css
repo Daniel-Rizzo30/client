@@ -8,3 +8,7 @@
   color: #61dafb;
 }
 
+img {
+  max-width: 35%;
+  max-height: 25%;
+}
